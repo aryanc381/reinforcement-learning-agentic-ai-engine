@@ -1,14 +1,21 @@
 import { WebSocketServer } from "ws";
 import { gemma } from "../llm/gemma.js";
-import { memoryVisualizer } from "../state/state.js";
 import type { IMemory } from "../types/IMemory.js";
+import prompt_updater from "../state/sys.js";
 
 export let i = 0;
-export const memory: IMemory[] = [];
+export const LTM: IMemory[] = [];
+const STM: IMemory[] = [];
 
 async function payloadHandler(entity: string, payload: string) {
-    memory.push({id: i, entity: entity, payload: payload});
-    
+    const length = LTM.length;
+    LTM.push({id: i, entity: entity, payload: payload});
+    if(LTM[i]?.id! / 3 == 0) {
+        for(let j = 6; j > 0; j--) {
+            STM.push(LTM[length - j - 1] as IMemory)
+        }  
+    }
+    i++;
 }
 
 export function initSocket(server: any) {
@@ -19,22 +26,18 @@ export function initSocket(server: any) {
         socket.on('message', async (data) => {
             const user_message = data.toString();
             payloadHandler("USER", user_message);
-            memoryVisualizer(i, memory);
-            
-
-            try {
-                const reply: string = await gemma(user_message);
+            // try {
+                const reply: string = await prompt_updater(LTM, STM, user_message);
                 socket.send(reply);
                 payloadHandler("LLM", reply);
-                memoryVisualizer(i, reply);
-            } catch(err) {
-                socket.send("Error generating the response.");
-            }
+            // } catch(err) {
+            //     socket.send("Error generating the response.");
+            // }
         });
 
         socket.on('close', () => {
             i = -1;
-            console.log(memory);
+            console.log(LTM);
             console.log('Client Disconnected.');
         });
     });
