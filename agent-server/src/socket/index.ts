@@ -1,24 +1,41 @@
 import { WebSocketServer } from "ws";
-import { server } from '../index.js';
 import { gemma } from "../llm/gemma.js";
+import { memoryVisualizer } from "../state/state.js";
+import type { IMemory } from "../types/IMemory.js";
 
-const ws = new WebSocketServer({ server });
+export let i = 0;
+export const memory: IMemory[] = [];
 
-ws.on('connection', (socket) => {
-    console.log('Client connected.');
+async function payloadHandler(entity: string, payload: string) {
+    memory.push({id: i, entity: entity, payload: payload});
+    
+}
 
-    socket.on('message', async (data) => {
-        const user_message = data.toString();
+export function initSocket(server: any) {
+    const ws = new WebSocketServer({ server });
+    ws.on('connection', (socket) => {
+        console.log('Client connected.');
 
-        try {
-            const reply: string = await gemma(user_message);
-            socket.send(reply);
-        } catch(err) {
-            socket.send("Error generating the response.");
-        }
+        socket.on('message', async (data) => {
+            const user_message = data.toString();
+            payloadHandler("USER", user_message);
+            memoryVisualizer(i, memory);
+            
+
+            try {
+                const reply: string = await gemma(user_message);
+                socket.send(reply);
+                payloadHandler("LLM", reply);
+                memoryVisualizer(i, reply);
+            } catch(err) {
+                socket.send("Error generating the response.");
+            }
+        });
+
+        socket.on('close', () => {
+            i = -1;
+            console.log(memory);
+            console.log('Client Disconnected.');
+        });
     });
-
-    socket.on('close', () => {
-        console.log('Client Disconnected.');
-    });
-});
+}    

@@ -1,12 +1,13 @@
 import express from 'express';
 import rootRouter from './routes/root.js';
 import http from 'http';
+import { initSocket } from './socket/index.js';
 
 
 const app = express();
 export const server = http.createServer(app);
 
-import "./socket/index.js"; 
+initSocket(server);
 
 app.use(express.json());
 

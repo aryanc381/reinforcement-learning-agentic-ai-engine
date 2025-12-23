@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/llm/gemma.ts","./src/routes/root.ts","./src/routes/beta/v1.ts","./src/socket/index.ts"],"version":"5.9.2"}
+{"root":["./src/index.ts","./src/llm/gemma.ts","./src/routes/root.ts","./src/routes/beta/v1.ts","./src/socket/index.ts","./src/state/state.ts","./src/types/imemory.ts"],"version":"5.9.2"}
