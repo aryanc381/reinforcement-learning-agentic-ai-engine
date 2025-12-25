@@ -1,14 +1,13 @@
 import express from 'express';
+import cors from 'cors';
 import http from 'http';
-import { initSocket } from './socket/index2.js';
-
+import { initSocket } from './socket/index.js';
 
 const app = express();
-export const server = http.createServer(app);
+app.use(cors());
+
+const server = http.createServer(app);
 
 initSocket(server);
 
-app.use(express.json());
-
-
-server.listen(3000, () => { console.log('App is listening at PORT 3000.') });
+server.listen(3000, () => { console.log('Server is listening at PORT-3000.'); });
