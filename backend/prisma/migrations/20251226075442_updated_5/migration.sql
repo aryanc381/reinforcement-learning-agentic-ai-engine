@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "KB" ALTER COLUMN "vec_id" DROP NOT NULL;
