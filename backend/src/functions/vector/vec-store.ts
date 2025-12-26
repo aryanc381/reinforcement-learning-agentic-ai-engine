@@ -8,13 +8,15 @@ export const vec_client = new QdrantClient({
 });
 
 export async function initCollection() {
-    await vec_client.createCollection("kb_vector2", {
+    await vec_client.createCollection("kb_vector3", {
         vectors: {
             size: 768,
             distance: "Cosine"
         }
     });
 }
+
+
 
 try {
     const result = await vec_client.getCollections();

@@ -57,10 +57,7 @@ router.post('/add', async (req, res) => {
                 }
         });
 
-        
-
-
-        const vec_res = await vec_client.upsert("kb_vector2", {
+        const vec_res = await vec_client.upsert("kb_vector3", {
             points: [
                 {
                     id: kb.id,
