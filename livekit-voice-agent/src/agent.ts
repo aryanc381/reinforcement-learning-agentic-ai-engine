@@ -61,7 +61,7 @@ export default defineAgent({
     await ctx.connect();
 
     const handle = session.generateReply({
-      instructions: 'You are a debt collecting agent and your purpose is to find the best optimal way to collect debts with the context provided in the system prompt and you are angry, even the goodbye is angry. STRICTLY FOLLOW THE SYSTEM PROMPT AND THIS',
+      instructions: 'You are a debt collecting agent and your purpose is to find the best optimal way to collect debts with the context provided in the system prompt and you are angry, even the goodbye is angry. STRICTLY FOLLOW THE SYSTEM PROMPT AND THIS!',
     });
   },
 });

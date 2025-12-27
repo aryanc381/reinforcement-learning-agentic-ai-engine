@@ -5,7 +5,9 @@ from sarvamai import SarvamAI
 import json, re
 from typing import List
 
+
 app = FastAPI(title="Embedding + Evaluation Server")
+
 
 embed_model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
 
@@ -33,6 +35,7 @@ def extract_json(text: str):
         raise ValueError("No JSON found in model output")
     return json.loads(match.group())
 
+
 class EvalInput(BaseModel):
     prompt: str
     qualities: List[str]
@@ -55,77 +58,74 @@ class EvalOutput(BaseModel):
     recommendations: Recommendations
 
 SYSTEM_EVAL_PROMPT = """
-            You are an automated conversation evaluation and improvement system.
+You are an automated conversation evaluation and improvement system.
 
-            Internally:
-            1. Act as a STRICT TEACHER to assess failures and risks
-            2. Act as a STUDENT to produce final scores and improvements
+Internally:
+1. Act as a STRICT TEACHER to assess failures and risks
+2. Act as a STUDENT to produce final scores and improvements
 
-            IMPORTANT:
-            - All reasoning must remain internal
-            - DO NOT reveal chain-of-thought
-            - DO NOT explain reasoning
-            - ONLY output the JSON specified
+IMPORTANT:
+- All reasoning must remain internal
+- DO NOT reveal chain-of-thought
+- DO NOT explain reasoning
+- ONLY output the JSON specified
 
-            ====================
-            SCORING AXES
-            ====================
-            - conversation_quality
-            - goal_completion
-            - compliance
+====================
+SCORING AXES
+====================
+- conversation_quality
+- goal_completion
+- compliance
 
-            Rules:
-            - Scores must be floats between 0 and 1
-            - Penalize violations of specs or outliers heavily
-            - Be conservative and realistic
+Rules:
+- Scores must be floats between 0 and 1
+- Penalize violations of specs or outliers heavily
+- Be conservative and realistic
 
-            ====================
-            IMPROVEMENTS
-            ====================
-            Suggest ONLY additions that would have improved outcomes.
+====================
+IMPROVEMENTS
+====================
+Suggest ONLY additions that would have improved outcomes.
 
-            ====================
-            OUTPUT FORMAT (JSON ONLY)
-            ====================
-            {
-            "scores": {
-                "conversation_quality": float,
-                "goal_completion": float,
-                "compliance": float
-            },
-            "recommendations": {
-                "add_qualities": [string],
-                "add_specs": [string],
-                "add_outliers": [string]
-            }
-            }
+====================
+OUTPUT FORMAT (JSON ONLY)
+====================
+{
+  "scores": {
+    "conversation_quality": float,
+    "goal_completion": float,
+    "compliance": float
+  },
+  "recommendations": {
+    "add_qualities": [string],
+    "add_specs": [string],
+    "add_outliers": [string]
+  }
+}
 """
 
-# =========================================================
-# Evaluate Endpoint (PURE JUDGE)
-# =========================================================
 @app.post("/evaluate", response_model=EvalOutput)
 def evaluate(payload: EvalInput):
     messages = [
         {"role": "system", "content": SYSTEM_EVAL_PROMPT},
-            {
-                "role": "user",
-                "content": f"""
-            SYSTEM PROMPT:
-            {payload.prompt}
+        {
+            "role": "user",
+            "content": f"""
+SYSTEM PROMPT:
+{payload.prompt}
 
-            QUALITIES:
-            - {"; ".join(payload.qualities)}
+QUALITIES:
+- {"; ".join(payload.qualities)}
 
-            SPECS:
-            - {"; ".join(payload.specs)}
+SPECS:
+- {"; ".join(payload.specs)}
 
-            OUTLIERS:
-            - {"; ".join(payload.outliers)}
+OUTLIERS:
+- {"; ".join(payload.outliers)}
 
-            CONVERSATION LOGS:
-            {payload.logs}
-            """
+CONVERSATION LOGS:
+{payload.logs}
+"""
         }
     ]
 
@@ -152,65 +152,65 @@ class BootstrapOutput(BaseModel):
     outliers: List[str]
 
 BOOTSTRAP_PROMPT = """
-        You are creating a NEW conversational knowledge base entry.
+You are creating a NEW conversational knowledge base entry.
 
-        Given:
-        - a short description of the use case
-        - example conversation logs
+Given:
+- a short description of the use case
+- example conversation logs
 
-        You must produce a KB entry with:
+You must produce a KB entry with:
 
-        1. category:
-        - ONE word only (examples: finance, healthcare, retail, telecom)
+1. category:
+   - ONE word only (examples: finance, healthcare, retail, telecom)
 
-        2. useCase:
-        - EXACTLY 3 words
-        - descriptive and specific
+2. useCase:
+   - EXACTLY 3 words
+   - descriptive and specific
 
-        3. qualities:
-        - behavioral traits the agent should follow
+3. qualities:
+   - behavioral traits the agent should follow
 
-        4. specs:
-        - rules in the form "If <condition> then <action>"
+4. specs:
+   - rules in the form "If <condition> then <action>"
 
-        5. outliers:
-        - safety constraints / forbidden behaviors
+5. outliers:
+   - safety constraints / forbidden behaviors
 
-        6. convRate:
-        - initial confidence score between 0.0 and 1.0
-        - default to 0.0 for new entries
+6. convRate:
+   - initial confidence score between 0.0 and 1.0
+   - default to 0.0 for new entries
 
-        IMPORTANT:
-        - Be conservative
-        - Focus on safety and clarity
-        - Output ONLY valid JSON
+IMPORTANT:
+- Be conservative
+- Focus on safety and clarity
+- Output ONLY valid JSON
 
-        ====================
-        OUTPUT FORMAT (JSON ONLY)
-        ====================
+====================
+OUTPUT FORMAT (JSON ONLY)
+====================
+{
+  "category": string,
+  "useCase": string,
+  "qualities": [string],
+  "specs": [string],
+  "convRate": float,
+  "outliers": [string]
+}
+"""
+
+@app.post("/bootstrap", response_model=BootstrapOutput)
+def bootstrap_use_case(payload: BootstrapInput):
+    messages = [
+        {"role": "system", "content": BOOTSTRAP_PROMPT},
         {
-        "category": string,
-        "useCase": string,
-        "qualities": [string],
-        "specs": [string],
-        "convRate": float,
-        "outliers": [string]
-        }
-        """
+            "role": "user",
+            "content": f"""
+USE CASE DESCRIPTION:
+{payload.description}
 
-        @app.post("/bootstrap", response_model=BootstrapOutput)
-        def bootstrap_use_case(payload: BootstrapInput):
-            messages = [
-                {"role": "system", "content": BOOTSTRAP_PROMPT},
-                {
-                    "role": "user",
-                    "content": f"""
-        USE CASE DESCRIPTION:
-        {payload.description}
-
-        CONVERSATION LOGS:
-        {payload.logs}
-        """
+CONVERSATION LOGS:
+{payload.logs}
+"""
         }
     ]
 
