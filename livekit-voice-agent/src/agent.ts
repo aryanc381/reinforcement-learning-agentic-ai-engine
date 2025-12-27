@@ -11,6 +11,7 @@ import * as silero from '@livekit/agents-plugin-silero';
 import { BackgroundVoiceCancellation } from '@livekit/noise-cancellation-node';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
+import { fetchSystemPrompt } from './helper.js';
 
 dotenv.config({ path: '.env.local' });
 
@@ -20,9 +21,9 @@ export default defineAgent({
   },
   entry: async (ctx: JobContext) => {
     const vad = ctx.proc.userData.vad! as silero.VAD;
-    
+    const system_prompt = await fetchSystemPrompt("Child Marriage.")
     const assistant = new voice.Agent({
-	    instructions: 'You are a helpful voice AI assistant. Laugh first as the call beings',
+	    instructions: system_prompt,
     });
 
     const session = new voice.AgentSession({
