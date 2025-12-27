@@ -21,6 +21,20 @@ model KB {
   specs     String[]
   convRate  Float
   outliers  String[]
-
+  archives  LB_Archive[]
   @@unique([category, useCase])
+}
+
+model LB_Archive {
+  id        Int      @id @default(autoincrement())
+  parentId  Int
+  parent    KB       @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  category  String
+  useCase   String
+  qualities String[]
+  specs     String[]
+  convRate  Float
+  outliers  String[]
+  rationale String
+  createdAt DateTime @default(now())
 }

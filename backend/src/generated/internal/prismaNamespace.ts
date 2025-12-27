@@ -384,7 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  KB: 'KB'
+  KB: 'KB',
+  LB_Archive: 'LB_Archive'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +401,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "kB"
+    modelProps: "kB" | "lB_Archive"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LB_Archive: {
+      payload: Prisma.$LB_ArchivePayload<ExtArgs>
+      fields: Prisma.LB_ArchiveFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LB_ArchiveFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LB_ArchiveFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>
+        }
+        findFirst: {
+          args: Prisma.LB_ArchiveFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LB_ArchiveFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>
+        }
+        findMany: {
+          args: Prisma.LB_ArchiveFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>[]
+        }
+        create: {
+          args: Prisma.LB_ArchiveCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>
+        }
+        createMany: {
+          args: Prisma.LB_ArchiveCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LB_ArchiveCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>[]
+        }
+        delete: {
+          args: Prisma.LB_ArchiveDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>
+        }
+        update: {
+          args: Prisma.LB_ArchiveUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>
+        }
+        deleteMany: {
+          args: Prisma.LB_ArchiveDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LB_ArchiveUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LB_ArchiveUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>[]
+        }
+        upsert: {
+          args: Prisma.LB_ArchiveUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LB_ArchivePayload>
+        }
+        aggregate: {
+          args: Prisma.LB_ArchiveAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLB_Archive>
+        }
+        groupBy: {
+          args: Prisma.LB_ArchiveGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LB_ArchiveGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LB_ArchiveCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LB_ArchiveCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -528,6 +603,22 @@ export const KBScalarFieldEnum = {
 } as const
 
 export type KBScalarFieldEnum = (typeof KBScalarFieldEnum)[keyof typeof KBScalarFieldEnum]
+
+
+export const LB_ArchiveScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  category: 'category',
+  useCase: 'useCase',
+  qualities: 'qualities',
+  specs: 'specs',
+  convRate: 'convRate',
+  outliers: 'outliers',
+  rationale: 'rationale',
+  createdAt: 'createdAt'
+} as const
+
+export type LB_ArchiveScalarFieldEnum = (typeof LB_ArchiveScalarFieldEnum)[keyof typeof LB_ArchiveScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -591,6 +682,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 /**
@@ -689,6 +794,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   kB?: Prisma.KBOmit
+  lB_Archive?: Prisma.LB_ArchiveOmit
 }
 
 /* Types for Logging */

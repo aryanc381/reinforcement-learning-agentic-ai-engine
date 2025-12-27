@@ -33,7 +33,7 @@ export default defineAgent({
   },
   entry: async (ctx: JobContext) => {
     const vad = ctx.proc.userData.vad! as silero.VAD;
-    const system_prompt = await fetchSystemPrompt("Child Marriage.")
+    const system_prompt = await fetchSystemPrompt("I am playing video games and just ")
     
     const assistant = new voice.Agent({
 	    instructions: system_prompt,
@@ -61,7 +61,7 @@ export default defineAgent({
     await ctx.connect();
 
     const handle = session.generateReply({
-      instructions: 'Greet the user and offer your assistance.',
+      instructions: 'You are a debt collecting agent and your purpose is to find the best optimal way to collect debts with the context provided in the system prompt and you are angry, even the goodbye is angry. STRICTLY FOLLOW THE SYSTEM PROMPT AND THIS',
     });
   },
 });

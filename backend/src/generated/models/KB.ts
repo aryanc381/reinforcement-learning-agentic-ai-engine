@@ -224,6 +224,7 @@ export type KBWhereInput = {
   specs?: Prisma.StringNullableListFilter<"KB">
   convRate?: Prisma.FloatFilter<"KB"> | number
   outliers?: Prisma.StringNullableListFilter<"KB">
+  archives?: Prisma.LB_ArchiveListRelationFilter
 }
 
 export type KBOrderByWithRelationInput = {
@@ -234,6 +235,7 @@ export type KBOrderByWithRelationInput = {
   specs?: Prisma.SortOrder
   convRate?: Prisma.SortOrder
   outliers?: Prisma.SortOrder
+  archives?: Prisma.LB_ArchiveOrderByRelationAggregateInput
 }
 
 export type KBWhereUniqueInput = Prisma.AtLeast<{
@@ -248,6 +250,7 @@ export type KBWhereUniqueInput = Prisma.AtLeast<{
   specs?: Prisma.StringNullableListFilter<"KB">
   convRate?: Prisma.FloatFilter<"KB"> | number
   outliers?: Prisma.StringNullableListFilter<"KB">
+  archives?: Prisma.LB_ArchiveListRelationFilter
 }, "id" | "category_useCase">
 
 export type KBOrderByWithAggregationInput = {
@@ -285,6 +288,7 @@ export type KBCreateInput = {
   specs?: Prisma.KBCreatespecsInput | string[]
   convRate: number
   outliers?: Prisma.KBCreateoutliersInput | string[]
+  archives?: Prisma.LB_ArchiveCreateNestedManyWithoutParentInput
 }
 
 export type KBUncheckedCreateInput = {
@@ -295,6 +299,7 @@ export type KBUncheckedCreateInput = {
   specs?: Prisma.KBCreatespecsInput | string[]
   convRate: number
   outliers?: Prisma.KBCreateoutliersInput | string[]
+  archives?: Prisma.LB_ArchiveUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type KBUpdateInput = {
@@ -304,6 +309,7 @@ export type KBUpdateInput = {
   specs?: Prisma.KBUpdatespecsInput | string[]
   convRate?: Prisma.FloatFieldUpdateOperationsInput | number
   outliers?: Prisma.KBUpdateoutliersInput | string[]
+  archives?: Prisma.LB_ArchiveUpdateManyWithoutParentNestedInput
 }
 
 export type KBUncheckedUpdateInput = {
@@ -314,6 +320,7 @@ export type KBUncheckedUpdateInput = {
   specs?: Prisma.KBUpdatespecsInput | string[]
   convRate?: Prisma.FloatFieldUpdateOperationsInput | number
   outliers?: Prisma.KBUpdateoutliersInput | string[]
+  archives?: Prisma.LB_ArchiveUncheckedUpdateManyWithoutParentNestedInput
 }
 
 export type KBCreateManyInput = {
@@ -392,6 +399,11 @@ export type KBSumOrderByAggregateInput = {
   convRate?: Prisma.SortOrder
 }
 
+export type KBScalarRelationFilter = {
+  is?: Prisma.KBWhereInput
+  isNot?: Prisma.KBWhereInput
+}
+
 export type KBCreatequalitiesInput = {
   set: string[]
 }
@@ -439,6 +451,103 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type KBCreateNestedOneWithoutArchivesInput = {
+  create?: Prisma.XOR<Prisma.KBCreateWithoutArchivesInput, Prisma.KBUncheckedCreateWithoutArchivesInput>
+  connectOrCreate?: Prisma.KBCreateOrConnectWithoutArchivesInput
+  connect?: Prisma.KBWhereUniqueInput
+}
+
+export type KBUpdateOneRequiredWithoutArchivesNestedInput = {
+  create?: Prisma.XOR<Prisma.KBCreateWithoutArchivesInput, Prisma.KBUncheckedCreateWithoutArchivesInput>
+  connectOrCreate?: Prisma.KBCreateOrConnectWithoutArchivesInput
+  upsert?: Prisma.KBUpsertWithoutArchivesInput
+  connect?: Prisma.KBWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.KBUpdateToOneWithWhereWithoutArchivesInput, Prisma.KBUpdateWithoutArchivesInput>, Prisma.KBUncheckedUpdateWithoutArchivesInput>
+}
+
+export type KBCreateWithoutArchivesInput = {
+  category: string
+  useCase: string
+  qualities?: Prisma.KBCreatequalitiesInput | string[]
+  specs?: Prisma.KBCreatespecsInput | string[]
+  convRate: number
+  outliers?: Prisma.KBCreateoutliersInput | string[]
+}
+
+export type KBUncheckedCreateWithoutArchivesInput = {
+  id?: number
+  category: string
+  useCase: string
+  qualities?: Prisma.KBCreatequalitiesInput | string[]
+  specs?: Prisma.KBCreatespecsInput | string[]
+  convRate: number
+  outliers?: Prisma.KBCreateoutliersInput | string[]
+}
+
+export type KBCreateOrConnectWithoutArchivesInput = {
+  where: Prisma.KBWhereUniqueInput
+  create: Prisma.XOR<Prisma.KBCreateWithoutArchivesInput, Prisma.KBUncheckedCreateWithoutArchivesInput>
+}
+
+export type KBUpsertWithoutArchivesInput = {
+  update: Prisma.XOR<Prisma.KBUpdateWithoutArchivesInput, Prisma.KBUncheckedUpdateWithoutArchivesInput>
+  create: Prisma.XOR<Prisma.KBCreateWithoutArchivesInput, Prisma.KBUncheckedCreateWithoutArchivesInput>
+  where?: Prisma.KBWhereInput
+}
+
+export type KBUpdateToOneWithWhereWithoutArchivesInput = {
+  where?: Prisma.KBWhereInput
+  data: Prisma.XOR<Prisma.KBUpdateWithoutArchivesInput, Prisma.KBUncheckedUpdateWithoutArchivesInput>
+}
+
+export type KBUpdateWithoutArchivesInput = {
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  useCase?: Prisma.StringFieldUpdateOperationsInput | string
+  qualities?: Prisma.KBUpdatequalitiesInput | string[]
+  specs?: Prisma.KBUpdatespecsInput | string[]
+  convRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  outliers?: Prisma.KBUpdateoutliersInput | string[]
+}
+
+export type KBUncheckedUpdateWithoutArchivesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  useCase?: Prisma.StringFieldUpdateOperationsInput | string
+  qualities?: Prisma.KBUpdatequalitiesInput | string[]
+  specs?: Prisma.KBUpdatespecsInput | string[]
+  convRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  outliers?: Prisma.KBUpdateoutliersInput | string[]
+}
+
+
+/**
+ * Count Type KBCountOutputType
+ */
+
+export type KBCountOutputType = {
+  archives: number
+}
+
+export type KBCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  archives?: boolean | KBCountOutputTypeCountArchivesArgs
+}
+
+/**
+ * KBCountOutputType without action
+ */
+export type KBCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KBCountOutputType
+   */
+  select?: Prisma.KBCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * KBCountOutputType without action
+ */
+export type KBCountOutputTypeCountArchivesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LB_ArchiveWhereInput
+}
 
 
 export type KBSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -449,6 +558,8 @@ export type KBSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
   specs?: boolean
   convRate?: boolean
   outliers?: boolean
+  archives?: boolean | Prisma.KB$archivesArgs<ExtArgs>
+  _count?: boolean | Prisma.KBCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["kB"]>
 
 export type KBSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -482,10 +593,18 @@ export type KBSelectScalar = {
 }
 
 export type KBOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "category" | "useCase" | "qualities" | "specs" | "convRate" | "outliers", ExtArgs["result"]["kB"]>
+export type KBInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  archives?: boolean | Prisma.KB$archivesArgs<ExtArgs>
+  _count?: boolean | Prisma.KBCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type KBIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type KBIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $KBPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "KB"
-  objects: {}
+  objects: {
+    archives: Prisma.$LB_ArchivePayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     category: string
@@ -888,6 +1007,7 @@ readonly fields: KBFieldRefs;
  */
 export interface Prisma__KBClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  archives<T extends Prisma.KB$archivesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KB$archivesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LB_ArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -941,6 +1061,10 @@ export type KBFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
+  /**
    * Filter, which KB to fetch.
    */
   where: Prisma.KBWhereUniqueInput
@@ -959,6 +1083,10 @@ export type KBFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
+  /**
    * Filter, which KB to fetch.
    */
   where: Prisma.KBWhereUniqueInput
@@ -976,6 +1104,10 @@ export type KBFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the KB
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
   /**
    * Filter, which KB to fetch.
    */
@@ -1025,6 +1157,10 @@ export type KBFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
+  /**
    * Filter, which KB to fetch.
    */
   where?: Prisma.KBWhereInput
@@ -1073,6 +1209,10 @@ export type KBFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
+  /**
    * Filter, which KBS to fetch.
    */
   where?: Prisma.KBWhereInput
@@ -1115,6 +1255,10 @@ export type KBCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs =
    * Omit specific fields from the KB
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
   /**
    * The data needed to create a KB.
    */
@@ -1163,6 +1307,10 @@ export type KBUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs =
    * Omit specific fields from the KB
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
   /**
    * The data needed to update a KB.
    */
@@ -1230,6 +1378,10 @@ export type KBUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs =
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
+  /**
    * The filter to search for the KB to update in case it exists.
    */
   where: Prisma.KBWhereUniqueInput
@@ -1256,6 +1408,10 @@ export type KBDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs =
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
+  /**
    * Filter which KB to delete.
    */
   where: Prisma.KBWhereUniqueInput
@@ -1276,6 +1432,30 @@ export type KBDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
+ * KB.archives
+ */
+export type KB$archivesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LB_Archive
+   */
+  select?: Prisma.LB_ArchiveSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LB_Archive
+   */
+  omit?: Prisma.LB_ArchiveOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LB_ArchiveInclude<ExtArgs> | null
+  where?: Prisma.LB_ArchiveWhereInput
+  orderBy?: Prisma.LB_ArchiveOrderByWithRelationInput | Prisma.LB_ArchiveOrderByWithRelationInput[]
+  cursor?: Prisma.LB_ArchiveWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LB_ArchiveScalarFieldEnum | Prisma.LB_ArchiveScalarFieldEnum[]
+}
+
+/**
  * KB without action
  */
 export type KBDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1287,4 +1467,8 @@ export type KBDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    * Omit specific fields from the KB
    */
   omit?: Prisma.KBOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KBInclude<ExtArgs> | null
 }

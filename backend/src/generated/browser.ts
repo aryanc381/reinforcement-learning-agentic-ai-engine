@@ -22,3 +22,8 @@ export * from './enums.js';
  * 
  */
 export type KB = Prisma.KBModel
+/**
+ * Model LB_Archive
+ * 
+ */
+export type LB_Archive = Prisma.LB_ArchiveModel

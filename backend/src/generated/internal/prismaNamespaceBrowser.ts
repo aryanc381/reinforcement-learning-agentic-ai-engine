@@ -51,7 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  KB: 'KB'
+  KB: 'KB',
+  LB_Archive: 'LB_Archive'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -81,6 +82,22 @@ export const KBScalarFieldEnum = {
 } as const
 
 export type KBScalarFieldEnum = (typeof KBScalarFieldEnum)[keyof typeof KBScalarFieldEnum]
+
+
+export const LB_ArchiveScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  category: 'category',
+  useCase: 'useCase',
+  qualities: 'qualities',
+  specs: 'specs',
+  convRate: 'convRate',
+  outliers: 'outliers',
+  rationale: 'rationale',
+  createdAt: 'createdAt'
+} as const
+
+export type LB_ArchiveScalarFieldEnum = (typeof LB_ArchiveScalarFieldEnum)[keyof typeof LB_ArchiveScalarFieldEnum]
 
 
 export const SortOrder = {
