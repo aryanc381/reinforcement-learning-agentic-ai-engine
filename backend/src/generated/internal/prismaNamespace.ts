@@ -523,7 +523,8 @@ export const KBScalarFieldEnum = {
   useCase: 'useCase',
   qualities: 'qualities',
   specs: 'specs',
-  convRate: 'convRate'
+  convRate: 'convRate',
+  outliers: 'outliers'
 } as const
 
 export type KBScalarFieldEnum = (typeof KBScalarFieldEnum)[keyof typeof KBScalarFieldEnum]

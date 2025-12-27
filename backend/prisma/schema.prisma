@@ -20,6 +20,7 @@ model KB {
   qualities String[]
   specs     String[]
   convRate  Float
+  outliers  String[]
 
   @@unique([category, useCase])
 }

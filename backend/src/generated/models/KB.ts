@@ -57,6 +57,7 @@ export type KBCountAggregateOutputType = {
   qualities: number
   specs: number
   convRate: number
+  outliers: number
   _all: number
 }
 
@@ -92,6 +93,7 @@ export type KBCountAggregateInputType = {
   qualities?: true
   specs?: true
   convRate?: true
+  outliers?: true
   _all?: true
 }
 
@@ -188,6 +190,7 @@ export type KBGroupByOutputType = {
   qualities: string[]
   specs: string[]
   convRate: number
+  outliers: string[]
   _count: KBCountAggregateOutputType | null
   _avg: KBAvgAggregateOutputType | null
   _sum: KBSumAggregateOutputType | null
@@ -220,6 +223,7 @@ export type KBWhereInput = {
   qualities?: Prisma.StringNullableListFilter<"KB">
   specs?: Prisma.StringNullableListFilter<"KB">
   convRate?: Prisma.FloatFilter<"KB"> | number
+  outliers?: Prisma.StringNullableListFilter<"KB">
 }
 
 export type KBOrderByWithRelationInput = {
@@ -229,6 +233,7 @@ export type KBOrderByWithRelationInput = {
   qualities?: Prisma.SortOrder
   specs?: Prisma.SortOrder
   convRate?: Prisma.SortOrder
+  outliers?: Prisma.SortOrder
 }
 
 export type KBWhereUniqueInput = Prisma.AtLeast<{
@@ -242,6 +247,7 @@ export type KBWhereUniqueInput = Prisma.AtLeast<{
   qualities?: Prisma.StringNullableListFilter<"KB">
   specs?: Prisma.StringNullableListFilter<"KB">
   convRate?: Prisma.FloatFilter<"KB"> | number
+  outliers?: Prisma.StringNullableListFilter<"KB">
 }, "id" | "category_useCase">
 
 export type KBOrderByWithAggregationInput = {
@@ -251,6 +257,7 @@ export type KBOrderByWithAggregationInput = {
   qualities?: Prisma.SortOrder
   specs?: Prisma.SortOrder
   convRate?: Prisma.SortOrder
+  outliers?: Prisma.SortOrder
   _count?: Prisma.KBCountOrderByAggregateInput
   _avg?: Prisma.KBAvgOrderByAggregateInput
   _max?: Prisma.KBMaxOrderByAggregateInput
@@ -268,6 +275,7 @@ export type KBScalarWhereWithAggregatesInput = {
   qualities?: Prisma.StringNullableListFilter<"KB">
   specs?: Prisma.StringNullableListFilter<"KB">
   convRate?: Prisma.FloatWithAggregatesFilter<"KB"> | number
+  outliers?: Prisma.StringNullableListFilter<"KB">
 }
 
 export type KBCreateInput = {
@@ -276,6 +284,7 @@ export type KBCreateInput = {
   qualities?: Prisma.KBCreatequalitiesInput | string[]
   specs?: Prisma.KBCreatespecsInput | string[]
   convRate: number
+  outliers?: Prisma.KBCreateoutliersInput | string[]
 }
 
 export type KBUncheckedCreateInput = {
@@ -285,6 +294,7 @@ export type KBUncheckedCreateInput = {
   qualities?: Prisma.KBCreatequalitiesInput | string[]
   specs?: Prisma.KBCreatespecsInput | string[]
   convRate: number
+  outliers?: Prisma.KBCreateoutliersInput | string[]
 }
 
 export type KBUpdateInput = {
@@ -293,6 +303,7 @@ export type KBUpdateInput = {
   qualities?: Prisma.KBUpdatequalitiesInput | string[]
   specs?: Prisma.KBUpdatespecsInput | string[]
   convRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  outliers?: Prisma.KBUpdateoutliersInput | string[]
 }
 
 export type KBUncheckedUpdateInput = {
@@ -302,6 +313,7 @@ export type KBUncheckedUpdateInput = {
   qualities?: Prisma.KBUpdatequalitiesInput | string[]
   specs?: Prisma.KBUpdatespecsInput | string[]
   convRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  outliers?: Prisma.KBUpdateoutliersInput | string[]
 }
 
 export type KBCreateManyInput = {
@@ -311,6 +323,7 @@ export type KBCreateManyInput = {
   qualities?: Prisma.KBCreatequalitiesInput | string[]
   specs?: Prisma.KBCreatespecsInput | string[]
   convRate: number
+  outliers?: Prisma.KBCreateoutliersInput | string[]
 }
 
 export type KBUpdateManyMutationInput = {
@@ -319,6 +332,7 @@ export type KBUpdateManyMutationInput = {
   qualities?: Prisma.KBUpdatequalitiesInput | string[]
   specs?: Prisma.KBUpdatespecsInput | string[]
   convRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  outliers?: Prisma.KBUpdateoutliersInput | string[]
 }
 
 export type KBUncheckedUpdateManyInput = {
@@ -328,6 +342,7 @@ export type KBUncheckedUpdateManyInput = {
   qualities?: Prisma.KBUpdatequalitiesInput | string[]
   specs?: Prisma.KBUpdatespecsInput | string[]
   convRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  outliers?: Prisma.KBUpdateoutliersInput | string[]
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -350,6 +365,7 @@ export type KBCountOrderByAggregateInput = {
   qualities?: Prisma.SortOrder
   specs?: Prisma.SortOrder
   convRate?: Prisma.SortOrder
+  outliers?: Prisma.SortOrder
 }
 
 export type KBAvgOrderByAggregateInput = {
@@ -384,6 +400,10 @@ export type KBCreatespecsInput = {
   set: string[]
 }
 
+export type KBCreateoutliersInput = {
+  set: string[]
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -406,6 +426,11 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type KBUpdateoutliersInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -423,6 +448,7 @@ export type KBSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
   qualities?: boolean
   specs?: boolean
   convRate?: boolean
+  outliers?: boolean
 }, ExtArgs["result"]["kB"]>
 
 export type KBSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -432,6 +458,7 @@ export type KBSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions
   qualities?: boolean
   specs?: boolean
   convRate?: boolean
+  outliers?: boolean
 }, ExtArgs["result"]["kB"]>
 
 export type KBSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -441,6 +468,7 @@ export type KBSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions
   qualities?: boolean
   specs?: boolean
   convRate?: boolean
+  outliers?: boolean
 }, ExtArgs["result"]["kB"]>
 
 export type KBSelectScalar = {
@@ -450,9 +478,10 @@ export type KBSelectScalar = {
   qualities?: boolean
   specs?: boolean
   convRate?: boolean
+  outliers?: boolean
 }
 
-export type KBOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "category" | "useCase" | "qualities" | "specs" | "convRate", ExtArgs["result"]["kB"]>
+export type KBOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "category" | "useCase" | "qualities" | "specs" | "convRate" | "outliers", ExtArgs["result"]["kB"]>
 
 export type $KBPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "KB"
@@ -464,6 +493,7 @@ export type $KBPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     qualities: string[]
     specs: string[]
     convRate: number
+    outliers: string[]
   }, ExtArgs["result"]["kB"]>
   composites: {}
 }
@@ -893,6 +923,7 @@ export interface KBFieldRefs {
   readonly qualities: Prisma.FieldRef<"KB", 'String[]'>
   readonly specs: Prisma.FieldRef<"KB", 'String[]'>
   readonly convRate: Prisma.FieldRef<"KB", 'Float'>
+  readonly outliers: Prisma.FieldRef<"KB", 'String[]'>
 }
     
 

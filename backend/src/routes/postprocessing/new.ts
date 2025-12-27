@@ -5,6 +5,12 @@ import { prisma } from '../../lib/prisma.js';
 import { embed } from '../../functions/vector/embed.ts.js';
 import { vec_client } from '../../functions/vector/vec-store.js';
 
+const logs = zod.object({
+        id: zod.number(),
+        entity: zod.string(),
+        payload: zod.string()
+});
+
 const router = express.Router();
 
 const newDB = zod.object({
@@ -13,6 +19,7 @@ const newDB = zod.object({
     qualities: zod.array(zod.string()),
     specs: zod.array(zod.string()),
     convRate: zod.number(),
+    input_logs: zod.array(logs)
 });
 
 router.post('/add', async (req, res) => {

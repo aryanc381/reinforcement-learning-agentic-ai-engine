@@ -15,6 +15,18 @@ import { fetchSystemPrompt } from './helper.js';
 
 dotenv.config({ path: '.env.local' });
 
+export function captureAssistantSpeech(
+  assistant: any,
+  onText: (text: string) => void
+) {
+  const originalSay = assistant.say.bind(assistant);
+
+  assistant.say = async (text: string, ...args: any[]) => {
+    onText(text);
+    return originalSay(text, ...args);
+  };
+}
+
 export default defineAgent({
   prewarm: async (proc: JobProcess) => {
     proc.userData.vad = await silero.VAD.load();
@@ -22,6 +34,7 @@ export default defineAgent({
   entry: async (ctx: JobContext) => {
     const vad = ctx.proc.userData.vad! as silero.VAD;
     const system_prompt = await fetchSystemPrompt("Child Marriage.")
+    
     const assistant = new voice.Agent({
 	    instructions: system_prompt,
     });
@@ -34,9 +47,11 @@ export default defineAgent({
       turnDetection: new livekit.turnDetector.MultilingualModel(),
     });
 
+
     await session.start({
       agent: assistant,
       room: ctx.room,
+      record: true,
       inputOptions: {
         // For telephony applications, use `TelephonyBackgroundVoiceCancellation` for best results
         noiseCancellation: BackgroundVoiceCancellation(),
